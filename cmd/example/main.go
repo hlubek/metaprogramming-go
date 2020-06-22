@@ -12,7 +12,7 @@ import (
 func main() {
 	ctx := context.Background()
 
-	repository.InsertProductReflect(ctx, nil, domain.Product{
+	repository.InsertProduct(ctx, nil, domain.Product{
 		ID:                uuid.Must(uuid.NewV4()),
 		ArticleNumber:     "12345678",
 		Name:              "Cheddar cheese",

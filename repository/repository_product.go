@@ -3,7 +3,6 @@ package repository
 import (
 	"context"
 	"fmt"
-	"reflect"
 
 	"github.com/Masterminds/squirrel"
 	"github.com/gofrs/uuid"
@@ -24,25 +23,6 @@ func InsertProduct(ctx context.Context, runner squirrel.BaseRunner, product doma
 			"price_cents":        product.PriceCents,
 			"on_sale":            product.OnSale,
 		}).
-		RunWith(runner).
-		ExecContext(ctx)
-	return err
-}
-
-
-func InsertProductReflect(ctx context.Context, runner squirrel.BaseRunner, product domain.Product) error {
-	m := make(map[string]interface{})
-	t := reflect.TypeOf(product)
-	for i:=0; i< t.NumField();i++ {
-		field := t.Field(i)
-		col := field.Tag.Get("col")
-		if col != "" {
-			m[col] = reflect.ValueOf(product).Field(i).Interface()
-		}
-	}
-
-	_, err := squirrel.Insert("products").
-		SetMap(m).
 		RunWith(runner).
 		ExecContext(ctx)
 	return err
