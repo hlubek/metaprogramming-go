@@ -24,16 +24,18 @@ func InsertProduct(ctx context.Context, runner squirrel.BaseRunner, product doma
 			"on_sale":            product.OnSale,
 		}).
 		RunWith(runner).
+		PlaceholderFormat(squirrel.Dollar).
 		ExecContext(ctx)
 	return err
 }
 
 func UpdateProduct(ctx context.Context, runner squirrel.BaseRunner, id uuid.UUID, changeSet ProductChangeSet) error {
 	res, err := squirrel.
-		Update("gamers").
-		Where(squirrel.Eq{"gamer_id": id}).
+		Update("products").
+		Where(squirrel.Eq{"product_id": id}).
 		SetMap(changeSet.toMap()).
 		RunWith(runner).
+		PlaceholderFormat(squirrel.Dollar).
 		ExecContext(ctx)
 	if err != nil {
 		return fmt.Errorf("executing update: %w", err)

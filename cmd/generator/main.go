@@ -87,7 +87,7 @@ func generate(sourceTypeName string, structType *types.Struct) error {
 		changeSetFields = append(changeSetFields, code)
 	}
 
-	// Generate changeset type
+	// Generate change set type
 	changeSetName := sourceTypeName + "ChangeSet"
 	f.Type().Id(changeSetName).Struct(changeSetFields...)
 
